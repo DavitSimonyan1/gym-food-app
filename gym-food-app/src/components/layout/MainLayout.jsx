@@ -5,7 +5,7 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemButton, // Add this
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Box,
@@ -21,22 +21,22 @@ import {
   Menu,
 } from "@mui/icons-material";
 
+import { Outlet, NavLink } from "react-router-dom";
+
 export default function MainLayout() {
-  // State to control if drawer is open or closed
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Function to toggle drawer
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  // Navigation menu items
-  const menuItems = [
-    { text: "Dashboard", icon: <Dashboard /> },
-    { text: "Workouts", icon: <FitnessCenter /> },
-    { text: "Nutrition", icon: <Restaurant /> },
-    { text: "Store Locator", icon: <Store /> },
-  ];
+const menuItems = [
+  { text: "Dashboard", icon: <Dashboard />, path: "/" }, // исправлено
+  { text: "Workouts", icon: <FitnessCenter />, path: "/workouts" },
+  { text: "Nutrition", icon: <Restaurant />, path: "/nutrition" },
+  { text: "Store Locator", icon: <Store />, path: "/store" },
+];
+
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -56,7 +56,16 @@ export default function MainLayout() {
           <List>
             {menuItems.map((item) => (
               <ListItem key={item.text} disablePadding>
-                <ListItemButton>
+                <ListItemButton
+                  component={NavLink}
+                  to={item.path}
+                  onClick={toggleDrawer}
+                  sx={{
+                    "&.active": {
+                      backgroundColor: "rgba(0,0,0,0.08)",
+                    },
+                  }}
+                >
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />
                 </ListItemButton>
@@ -75,10 +84,7 @@ export default function MainLayout() {
           mt: 8, // Space for top bar
         }}
       >
-        <Typography variant="h4">Welcome to your Gym App!</Typography>
-        <Typography variant="body1">
-          This is where different pages will show.
-        </Typography>
+        <Outlet /> {/* Здесь будут отображаться страницы */}
       </Box>
     </Box>
   );
