@@ -10,6 +10,8 @@ import Workouts from "./pages/Workouts";
 import Nutrition from "./pages/Nutrition";
 import StoreLocator from "./pages/StoreLocator";
 
+// ✅ Импортируем провайдер
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
